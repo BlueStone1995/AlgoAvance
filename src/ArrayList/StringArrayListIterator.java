@@ -17,6 +17,7 @@ public class StringArrayListIterator implements Iterator<String> {
 
     @Override
     public boolean hasNext() {
+
         return (position < al.getElementData().length);
     }
 
