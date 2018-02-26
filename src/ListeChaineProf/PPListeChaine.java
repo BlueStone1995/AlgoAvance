@@ -12,18 +12,19 @@ public class PPListeChaine {
         sl.add("C");
         sl.add("D");
         sl.add("E");
-        sl.addEnTete("O");
-        sl.addEnTete("P");
+        //sl.addEnTete("O");
+        //sl.addEnTete("P");
 
-        sl.insert(5, "S");
+        sl.insert(3, "S");
         sl.insert(2, "V");
-        sl.remove(1);
-        sl.remove(0);
+        //sl.remove(24);
+        //sl.remove(0);
 
         SimpleList slb = new SimpleList();
         slb.addEnTete("X");
         slb.add("Y");
         slb.add("Z");
+
 
         sl.addAll(slb);
 
@@ -31,13 +32,7 @@ public class PPListeChaine {
         slb.addEnTete("Chiffre");
 
         System.out.println(
-                sl.contains("A") + "\n" +
-                        sl.contains("B") + "\n" +
-                        sl.contains("O") + "\n" +
-                        sl.contains("P") + "\n" +
-                        sl.contains("Bob") + "\n" +
-                        sl.contains("X") + "\n" +
-                        sl.contains("Y")
+                slb.contains("X")
         );
 
 

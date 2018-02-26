@@ -5,7 +5,7 @@ public class Noeud {
     private String data;
     private Noeud suivant;
     private static int compt = 0; // Variable de classe
-    private static int nbNoeud = 0;
+    private int nbNoeud = 0;
 
     public Noeud(String data, Noeud suivant) {
         this.data = data;
@@ -22,7 +22,6 @@ public class Noeud {
     public void addEnFin(String s) {
         if (this.suivant == null) {
             this.suivant = new Noeud(s);
-            nbNoeud++;
         } else {
             this.suivant.addEnFin(s);
         }
@@ -30,8 +29,9 @@ public class Noeud {
 
 
     public boolean containsNoeud(String s) {
-        if (this.data == s) {
+        if (this.data.equals(s)) {
             return true;
+
         } else if (this.suivant == null) {
             return false;
         } else {
@@ -41,40 +41,38 @@ public class Noeud {
     }
 
     public void insertNoeud(int i, String s) { // Insére s dans la liste i en partant de 0
-        if (i > nbNoeud && i < 0) {
+        if (i > this.nbNoeud || i < 0) {
             return;
         }
 
         // Passe au suivant jusqu'a être au contenu i
-        while (compt < i) {
-            this.suivant.insertNoeud(i, s);
+        if (compt < i) {
             compt++;
+            this.suivant.insertNoeud(i, s);
+        } else if (compt == i) {
+
+            // Crée nouveau noeud
+            Noeud noeudI = new Noeud(this.data, this.suivant);
+
+            // Insert donnée et modifie noeud suivant
+            this.data = s;
+            this.suivant = noeudI;
         }
-
-        // Crée nouveau noeud
-        Noeud noeudI = new Noeud(this.data, this.suivant);
-
-        // Insert donnée et modifie noeud suivant
-        this.data = s;
-        this.suivant = noeudI;
-
-        // Remet compteur à 0 et met à jour nombre de Noeud
+        // Remet compteur à 0
         compt = 0;
-        nbNoeud++;
+
     }
 
     public void removeNoeud(int i) {
-        if (i > nbNoeud && i < 0) {
+        if (i > this.nbNoeud || i < 0) {
             return;
         }
 
         // Passe au suivant jusqu'a être au contenu i
-        while (compt < (i - 1)) {
-            this.removeNoeud(i);
+        if (compt < (i - 1)) {
             compt++;
-        }
-
-        if (this.suivant.getSuivant() == null) {
+            this.removeNoeud(i);
+        } else if (this.suivant.getSuivant() == null) {
             this.suivant = null;
         } else {
             // Modifie le suivant de i-1 en prenant le noeud i+1
@@ -83,16 +81,17 @@ public class Noeud {
 
         // Remet compteur à 0 et met à jour nombre de Noeud
         compt = 0;
-        if (nbNoeud > 0) {
-            nbNoeud--;
+        if (this.nbNoeud > 0) {
+            this.nbNoeud--;
         }
-        nbNoeud = 0;
+        this.nbNoeud = 0;
     }
 
     // ajoute tous les éléments de la liste l à la fin de this
     public void addAllNoeud(SimpleList l) {
         if (this.suivant == null) {
             this.suivant = l.getContenu();
+            this.nbNoeud = this.nbNoeud + l.getContenu().nbNoeud;
             return;
         }
 

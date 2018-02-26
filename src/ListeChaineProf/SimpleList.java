@@ -26,10 +26,15 @@ public class SimpleList implements Iterable<String> {
     }
 
     public void insert(int i, String s) { // Insére s dans la liste i en partant de 0
+
         this.contenu.insertNoeud(i, s);
     }
 
     public void remove(int i) {
+        if (i == 0) {
+            this.contenu = this.contenu.getSuivant();
+        }
+
         this.contenu.removeNoeud(i);
     }
 
