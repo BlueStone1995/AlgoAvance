@@ -20,6 +20,7 @@ public class SimpleListIterator implements Iterator<String> {
 
     @Override
     public String next() {
-        return this.sl.getContenu().getSuivant().getData();
+        this.sl.setContenu(this.sl.getContenu().getSuivant());
+        return this.sl.getContenu().getData();
     }
 }
