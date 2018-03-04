@@ -1,4 +1,4 @@
-package ListeChaineProf;
+package ListeChaine;
 
 import java.util.Iterator;
 

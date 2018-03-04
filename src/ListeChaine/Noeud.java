@@ -1,45 +1,121 @@
 package ListeChaine;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+public class Noeud {
 
-public class Noeud implements Iterator<String> {
+    private String data;
+    private Noeud suivant;
+    private static int compt = 0; // Variable de classe
+    private int nbNoeud = 0;
 
-    private Map<Noeud, Liste> hm;
-    private Liste liste;
-
-    @Override
-    public boolean hasNext() {
-        return false;
+    public Noeud(String data, Noeud suivant) {
+        this.data = data;
+        this.suivant = suivant;
+        nbNoeud++;
     }
 
-    @Override
-    public String next() {
-        return null;
+    public Noeud(String data) {
+
+        this.data = data;
+        nbNoeud++;
     }
 
-    public Map<Noeud, Liste> getHm() {
-        return hm;
+    public void addEnFin(String s) {
+        if (this.suivant == null) {
+            this.suivant = new Noeud(s);
+        } else {
+            this.suivant.addEnFin(s);
+        }
     }
 
-    public void setHm(Map<Noeud, Liste> hm) {
-        this.hm = hm;
+
+    public boolean containsNoeud(String s) {
+        if (this.data.equals(s)) {
+            return true;
+        } else if (this.suivant == null) {
+            return false;
+        } else {
+            return this.suivant.containsNoeud(s);
+        }
     }
 
-    public Liste getListe() {
-        return liste;
+    public void insertNoeud(int i, String s) { // Insére s dans la liste i en partant de 0
+        if (i > this.nbNoeud || i < 0) {
+            return;
+        }
+
+        // Passe au suivant jusqu'a être au contenu i
+        if (compt < i) {
+            compt++;
+            this.suivant.insertNoeud(i, s);
+        } else if (compt == i) {
+
+            // Crée nouveau noeud
+            Noeud noeudI = new Noeud(this.data, this.suivant);
+
+            // Insert donnée et modifie noeud suivant
+            this.data = s;
+            this.suivant = noeudI;
+        }
+
+        // Remet compteur à 0
+        compt = 0;
     }
 
-    public void setListe(Liste liste) {
-        this.liste = liste;
+    public void removeNoeud(int i) {
+        if (i > this.nbNoeud || i < 0) {
+            return;
+        }
+
+        // Passe au suivant jusqu'a être au contenu i
+        if (compt < (i - 1)) {
+            compt++;
+            this.suivant.removeNoeud(i);
+        } else if (this.suivant.getSuivant() == null) {
+            this.suivant = null;
+        } else {
+            // Modifie le suivant de i-1 en prenant le noeud i+1
+            this.suivant = this.suivant.getSuivant();
+        }
+
+        // Remet compteur à 0 et met à jour nombre de Noeud
+        compt = 0;
+        if (this.nbNoeud > 0) {
+            this.nbNoeud--;
+        }
+        this.nbNoeud = 0;
     }
 
-    Noeud(Liste l) {
+    // ajoute tous les éléments de la liste l à la fin de this
+    public void addAllNoeud(SimpleList l) {
+        if (this.suivant == null) {
+            this.suivant = l.getContenu();
+            this.nbNoeud = this.nbNoeud + l.getContenu().nbNoeud;
+            return;
+        }
 
-        this.liste = l;
-
-        this.hm = new HashMap<>();
-        this.hm.put(this, l);
+        // Parcours jusqu'à la fin du this
+        this.suivant.addAllNoeud(l);
     }
+
+    // Getteurs et Setteurs
+    public String getData() {
+
+        return data;
+    }
+
+    public void setData(String data) {
+
+        this.data = data;
+    }
+
+    public Noeud getSuivant() {
+
+        return suivant;
+    }
+
+    public void setSuivant(Noeud suivant) {
+
+        this.suivant = suivant;
+    }
+
 }
