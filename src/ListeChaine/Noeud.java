@@ -5,18 +5,15 @@ public class Noeud {
     private String data;
     private Noeud suivant;
     private static int compt = 0; // Variable de classe
-    private int nbNoeud = 0;
 
     public Noeud(String data, Noeud suivant) {
         this.data = data;
         this.suivant = suivant;
-        nbNoeud++;
     }
 
-    public Noeud(String data) {
 
+    public Noeud(String data) {
         this.data = data;
-        nbNoeud++;
     }
 
     public void addEnFin(String s) {
@@ -39,9 +36,6 @@ public class Noeud {
     }
 
     public void insertNoeud(int i, String s) { // Insére s dans la liste i en partant de 0
-        if (i > this.nbNoeud || i < 0) {
-            return;
-        }
 
         // Passe au suivant jusqu'a être au contenu i
         if (compt < i) {
@@ -62,10 +56,6 @@ public class Noeud {
     }
 
     public void removeNoeud(int i) {
-        if (i > this.nbNoeud || i < 0) {
-            return;
-        }
-
         // Passe au suivant jusqu'a être au contenu i
         if (compt < (i - 1)) {
             compt++;
@@ -77,19 +67,14 @@ public class Noeud {
             this.suivant = this.suivant.getSuivant();
         }
 
-        // Remet compteur à 0 et met à jour nombre de Noeud
+        // Remet compteur à 0
         compt = 0;
-        if (this.nbNoeud > 0) {
-            this.nbNoeud--;
-        }
-        this.nbNoeud = 0;
     }
 
     // ajoute tous les éléments de la liste l à la fin de this
     public void addAllNoeud(SimpleList l) {
         if (this.suivant == null) {
             this.suivant = l.getContenu();
-            this.nbNoeud = this.nbNoeud + l.getContenu().nbNoeud;
             return;
         }
 
