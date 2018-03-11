@@ -1,10 +1,10 @@
 package DoublyLinkedList;
 
+
 import java.util.ListIterator;
 
-public class DoublyLinkedListIterator implements ListIterator<String> {
-
-    private DoublyLinkedList dl;
+public class DoublyLinkedListIterator<T> implements ListIterator<T> {
+    private DoublyLinkedList<T> dl;
     private static int index;
 
     DoublyLinkedListIterator(DoublyLinkedList dl) {
@@ -15,27 +15,27 @@ public class DoublyLinkedListIterator implements ListIterator<String> {
 
     @Override
     public boolean hasNext() {
-        return this.dl.getTete().getSuivant() != null;
+        return this.dl.getTete().getTete() != null;
     }
 
     @Override
     public boolean hasPrevious() {
-        return this.dl.getQueue().getPrecedent() != null;
+        return this.dl.getQueue().getQueue() != null;
     }
 
     @Override
-    public String next() {
-        this.dl.setTete(this.dl.getTete().getSuivant());
+    public T next() {
+        this.dl.setTete(this.dl.getTete().getTete());
         index++;
-        return this.dl.getTete().getData();
+        return (T) this.dl.getTete().getData();
     }
 
 
     @Override
-    public String previous() {
-        this.dl.setQueue(this.dl.getQueue().getPrecedent());
+    public T previous() {
+        this.dl.setQueue(this.dl.getQueue().getQueue());
         index--;
-        return this.dl.getQueue().getData();
+        return (T) this.dl.getQueue().getData();
     }
 
     @Override
@@ -56,12 +56,12 @@ public class DoublyLinkedListIterator implements ListIterator<String> {
     }
 
     @Override
-    public void set(String s) {
+    public void set(T s) {
 
     }
 
     @Override
-    public void add(String s) {
+    public void add(T s) {
 
     }
 }

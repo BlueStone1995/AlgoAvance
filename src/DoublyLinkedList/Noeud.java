@@ -1,72 +1,71 @@
 package DoublyLinkedList;
 
-public class Noeud {
 
-    private String data;
-    private Noeud suivant;
-    private Noeud precedent;
+public class Noeud<T> {
+    private T data;
+    private Noeud tete;
+    private Noeud queue;
     private static int compt = 0; // Variable de classe
 
     public Noeud() {
         this.data = null;
-        this.suivant = null;
-        this.precedent = null;
+        this.tete = null;
+        this.queue = null;
     }
 
-    public Noeud(String data, Noeud precedent, Noeud suivant) {
+    public Noeud(T data, Noeud queue, Noeud tete) {
         this.data = data;
-        this.suivant = suivant;
-        this.precedent = precedent;
+        this.tete = tete;
+        this.queue = queue;
     }
 
-    public Noeud(String data) {
+    public Noeud(T data) {
         this.data = data;
 
     }
 
-    public boolean containsNoeudD(String s) {
-        if (this.data.equals(s)) {
+    public boolean containsNoeudD(T t) {
+        if (this.data.equals(t)) {
             return true;
-        } else if (this.suivant == null) {
-            return false;
-        } else {
-            return this.suivant.containsNoeudD(s);
-        }
+        } else
+            return this.tete != null && this.tete.containsNoeudD(t);
     }
 
-    public void insertNoeudD(int i, String s) { // Insére s dans la liste i en partant de 0
+    public void insertNoeudD(int i, T t) { // Insére s dans la liste i en partant de 0
 
-        // Passe au suivant jusqu'a être au contenu i
+        // Passe au tete jusqu'a être au contenu i
         if (compt < i) {
             compt++;
-            this.suivant.insertNoeudD(i, s);
+            this.tete.insertNoeudD(i, t);
         } else if (compt == i) {
 
             // Crée nouveau noeud dupliqué de i
-            Noeud noeudI = new Noeud(this.data, this, this.suivant);
+            Noeud noeudI = new Noeud(this.data, this, this.tete);
 
-            // Insert donnée et modifie noeud suivant
-            this.data = s;
-            this.suivant = noeudI;
+            // Insert donnée et modifie noeud tete
+            this.data = t;
+            this.tete = noeudI;
         }
 
         // Remet compteur à 0
         compt = 0;
     }
 
-    public String removeNoeudD(int i) {
-        String removeElement = "";
-        // Passe au suivant jusqu'a être au contenu i-1
+    public T removeNoeudD(int i) {
+
+        T removeElement = null;
+        // Passe au tete jusqu'a être au contenu i-1
         if (compt < (i - 1)) {
             compt++;
-            this.suivant.removeNoeudD(i);
-        } else if (this.suivant.getSuivant() == null) {
-            removeElement = this.suivant.getData();
-            this.suivant = null;
+            this.tete.removeNoeudD(i);
+        } else if (this.tete.getTete() == null) {
+
+            removeElement = (T) this.tete.getData();
+            this.tete = null;
         } else {
-            removeElement = this.suivant.getData();
-            this.suivant = this.suivant.getSuivant(); // Modifie le suivant de i-1 en prenant le noeud i+1
-            this.suivant.setPrecedent(this); // Modifie le precedent de i+1 en prenant le noeud i-1
+            removeElement = (T) this.tete.getData();
+            this.tete = this.tete.getTete(); // Modifie le tete de i-1 en prenant le noeud i+1
+            this.tete.setQueue(this); // Modifie le queue de i+1 en prenant le noeud i-1
         }
 
         // Remet compteur à 0
@@ -75,31 +74,30 @@ public class Noeud {
     }
 
     // Getteurs et Setteurs
-    public String getData() {
-
+    public T getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(T data) {
 
         this.data = data;
     }
 
-    public Noeud getSuivant() {
+    public Noeud getTete() {
 
-        return suivant;
+        return tete;
     }
 
-    public void setSuivant(Noeud suivant) {
+    public void setTete(Noeud tete) {
 
-        this.suivant = suivant;
+        this.tete = tete;
     }
 
-    public Noeud getPrecedent() {
-        return precedent;
+    public Noeud getQueue() {
+        return queue;
     }
 
-    public void setPrecedent(Noeud precedent) {
-        this.precedent = precedent;
+    public void setQueue(Noeud queue) {
+        this.queue = queue;
     }
 }

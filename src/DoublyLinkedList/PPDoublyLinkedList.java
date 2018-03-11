@@ -6,28 +6,34 @@ public class PPDoublyLinkedList {
 
     public static void main(String args[]) {
 
-        DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
+        DoublyLinkedList<String> stringDoublyLinkedList = new DoublyLinkedList<String>();
 
-        doublyLinkedList.addFirst("A");
-        doublyLinkedList.addLast("B");
-        doublyLinkedList.addLast("C");
-        doublyLinkedList.addLast("D");
-        doublyLinkedList.addLast("E");
-        doublyLinkedList.removeFirst();
-        doublyLinkedList.remove(1);
+        stringDoublyLinkedList.addFirst("A");
+        stringDoublyLinkedList.addLast("B");
+        stringDoublyLinkedList.addLast("C");
+        stringDoublyLinkedList.addLast("D");
+        stringDoublyLinkedList.addLast("E");
+        stringDoublyLinkedList.removeFirst();
+        stringDoublyLinkedList.remove(1);
 
         System.out.println("Test contains : ");
         System.out.println(
-                "A est dans doublyLinkedList : " + doublyLinkedList.contains("A") + "\n" +
-                        "B est dans doublyLinkedList : " + doublyLinkedList.contains("B") + "\n" +
-                        "S est dans doublyLinkedList : " + doublyLinkedList.contains("S") + "\n" +
-                        "F est dans doublyLinkedList : " + doublyLinkedList.contains("F") + "\n"
+                "A est dans stringDoublyLinkedList : " + stringDoublyLinkedList.contains("A") + "\n" +
+                        "B est dans stringDoublyLinkedList : " + stringDoublyLinkedList.contains("B") + "\n" +
+                        "S est dans stringDoublyLinkedList : " + stringDoublyLinkedList.contains("S") + "\n" +
+                        "F est dans stringDoublyLinkedList : " + stringDoublyLinkedList.contains("F") + "\n"
         );
 
-        ListIterator<String> listIterator = doublyLinkedList.iterator();
+        ListIterator<String> listIterator = stringDoublyLinkedList.iterator();
 
+        DoublyLinkedList<String> doublyLinkedList = new DoublyLinkedList<String>();
+        doublyLinkedList.addFirst("F");
+        doublyLinkedList.addLast("G");
+        doublyLinkedList.addLast("H");
+
+        stringDoublyLinkedList.addAll(doublyLinkedList);
         // Affichage
-        System.out.print("[ " + doublyLinkedList.getTete().getData() + " ");
+        System.out.print("[ " + stringDoublyLinkedList.getTete().getData() + " ");
         while (listIterator.hasNext()) {
 
             System.out.print(listIterator.next() + " ");
@@ -36,12 +42,12 @@ public class PPDoublyLinkedList {
 
 
         System.out.println("Test push, peek et poll : ");
-        doublyLinkedList.push("début");
-        System.out.println(doublyLinkedList.peek() + "\n" +
-                doublyLinkedList.poll() + "\n");
+        stringDoublyLinkedList.push("début");
+        System.out.println(stringDoublyLinkedList.peek() + "\n" +
+                stringDoublyLinkedList.poll() + "\n");
 
         System.out.println("Test ListIterator : ");
-        DoublyLinkedList d = new DoublyLinkedList();
+        DoublyLinkedList<String> d = new DoublyLinkedList<String>();
         d.addFirst("1");
         d.addLast("2");
         d.addLast("3");

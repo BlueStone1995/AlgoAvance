@@ -2,8 +2,7 @@ package DoublyLinkedList;
 
 import java.util.ListIterator;
 
-public class DoublyLinkedList {
-
+public class DoublyLinkedList<T> {
     private Noeud tete; // Premier noeud
     private Noeud queue; // Dernier noeud
     private int taille;
@@ -14,7 +13,7 @@ public class DoublyLinkedList {
         this.taille = 0;
     }
 
-    public void addFirst(String s) { // OK
+    public void addFirst(T s) { // OK
 
         if (this.tete.getData() == null) {
             this.tete.setData(s);
@@ -22,14 +21,14 @@ public class DoublyLinkedList {
         } else {
             Noeud nouveauNoeud = new Noeud(s, null, this.tete);
 
-            this.tete.setPrecedent(nouveauNoeud); // Modifie precedent du deuxieme noeud
+            this.tete.setQueue(nouveauNoeud); // Modifie precedent du deuxieme noeud
             this.tete = nouveauNoeud; // Creer tete noeud
 
             this.taille++;
         }
     }
 
-    public void addLast(String s) { // OK à tester
+    public void addLast(T s) { // OK à tester
 
         if (this.queue.getData() == null) {
             this.queue.setData(s);
@@ -37,7 +36,7 @@ public class DoublyLinkedList {
         } else {
             Noeud nouveauNoeud = new Noeud(s, this.queue, null);
 
-            this.queue.setSuivant(nouveauNoeud); // Modifie suivant de l'avant queue noeud
+            this.queue.setTete(nouveauNoeud); // Modifie suivant de l'avant queue noeud
             this.queue = nouveauNoeud; // Crer queue noeud
 
             this.taille++;
@@ -45,12 +44,12 @@ public class DoublyLinkedList {
     }
 
 
-    public boolean contains(String s) { // OK à tester
+    public boolean contains(T s) { // OK à tester
         return this.tete.containsNoeudD(s);
     }
 
     // Insére s dans la liste i en partant de 0
-    public void add(int i, String s) { // OK à tester
+    public void add(int i, T s) { // OK à tester
         if (i >= this.taille || i < 0) {
             return;
         } else {
@@ -60,31 +59,31 @@ public class DoublyLinkedList {
     }
 
     // Enleve noeud i dans la liste en partant de 0
-    public String remove(int i) { // OK à tester
-        String removeElement = "";
+    public T remove(int i) { // OK à tester
+        T removeElement = null;
 
         if (i >= this.taille || i < 0) {
             return removeElement;
         } else if (i == 0) { // Enleve tete
-            removeElement = this.tete.getData();
-            this.tete = this.tete.getSuivant();
-            this.tete.setPrecedent(null);
+            removeElement = (T) this.tete.getData();
+            this.tete = this.tete.getTete();
+            this.tete.setQueue(null);
         } else if (i == (this.taille - 1)) { // Enleve queue
-            removeElement = this.queue.getData();
-            this.queue = this.queue.getPrecedent();
-            this.queue.setSuivant(null);
+            removeElement = (T) this.queue.getData();
+            this.queue = this.queue.getQueue();
+            this.queue.setTete(null);
         } else {
-            removeElement = this.tete.removeNoeudD(i);
+            removeElement = (T) this.tete.removeNoeudD(i);
         }
         this.taille--;
         return removeElement;
     }
 
     // ajoute tous les éléments de la liste l à la fin de this
-    public boolean addAll(DoublyLinkedList l) { // Ok à tester
+    public boolean addAll(DoublyLinkedList l) {
         try {
-            this.queue.setSuivant(l.tete); // Modifie suivant de mon dernier noeud de ma liste this
-            l.tete.setPrecedent(this.queue); // Modifie précedent de mon premier noeud de ma liste l
+            this.queue.setTete(l.tete); // Modifie suivant de mon dernier noeud de ma liste this
+            l.tete.setQueue(this.queue); // Modifie précedent de mon premier noeud de ma liste l
             this.queue = l.queue; // Modifie pointeur de mon dernier noeud
             this.taille = this.taille + l.getTaille(); // Modifie taille total
             return true;
@@ -93,15 +92,15 @@ public class DoublyLinkedList {
         }
     }
 
-    public String getFirst() {
-        return this.tete.getData();
+    public T getFirst() {
+        return (T) this.tete.getData();
     }
 
-    public String getLast() {
-        return this.queue.getData();
+    public T getLast() {
+        return (T) this.queue.getData();
     }
 
-    public String removeFirst() {
+    public T removeFirst() {
         /**
          String dataFirst = this.tete.getData();
          this.tete.setData("");
@@ -110,7 +109,7 @@ public class DoublyLinkedList {
         return this.remove(0);
     }
 
-    public String removeLast() {
+    public T removeLast() {
         /**
          String dataLast = this.queue.getData();
          this.queue.setData("");
@@ -118,22 +117,22 @@ public class DoublyLinkedList {
         return this.remove(this.taille - 1);
     }
 
-    public void push(String s) {
+    public void push(T s) {
         this.addFirst(s);
     }
 
-    public String peek() {
-        return this.tete.getData();
+    public T peek() {
+        return (T) this.tete.getData();
     }
 
-    public String poll() {
-        String pollData = this.tete.getData();
+    public T poll() {
+        T pollData = (T) this.tete.getData();
         this.removeFirst();
         return pollData;
     }
 
     // retourne un ListIterator qui énumère les String contenus dans la liste
-    public ListIterator<String> iterator() { //
+    public ListIterator<T> iterator() { //
         return new DoublyLinkedListIterator(this);
     }
 
